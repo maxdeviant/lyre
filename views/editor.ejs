@@ -2,20 +2,67 @@
 <html>
 <head>
     <title>Editor</title>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/ace/1.1.8/min/ace.js"></script>
 </head>
 <body>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
         .source,
         .output {
             width: 50%;
             float: left;
         }
+
+        .output iframe {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #editor {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+
+        .save {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: 999;
+        }
     </style>
-    <div class="source">
-        <pre><%= source %></pre>
-    </div>
-    <div class="output">
-        <%- html %>
-    </div>
+    <form method="post" action="/update">
+        <div style="clear: both;">
+            <span>&nbsp;</span>
+            <div class="source">
+                <div id="editor"><%= source %></div>
+            </div>
+            <div class="output">
+                <iframe src="/render" frameborder="0"></iframe>
+            </div>
+        </div>
+        <textarea id="source" name="source" style="display: none;"><%= source %></textarea>
+        <input class="save" type="submit" value="Save">
+    </form>
+    <script>
+        var editor = ace.edit('editor');
+        editor.setTheme('ace/theme/monokai');
+        editor.getSession().setMode('ace/mode/jade');
+
+        var source = $('#source');
+
+        editor.getSession().on('change', function () {
+            source.val(editor.getSession().getValue());
+        });
+    </script>
 </body>
 </html>
