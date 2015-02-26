@@ -17,10 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var router = express.Router();
 
-var options = {};
 var globals = require('./public/harp.json');
-
-console.log(globals)
 
 var planet = terraform.root('./public', globals);
 
