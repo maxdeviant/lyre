@@ -1,0 +1,11 @@
+{
+  "name": "jade-edit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marshall Bowers <elliott.codes@gmail.com>",
+  "license": "MIT"
+}
