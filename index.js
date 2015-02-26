@@ -3,7 +3,9 @@
 var jade = require('jade');
 
 var options = {};
-var locals = {};
+var locals = {
+    content: 'Some substituted content.'
+};
 
 var compile = jade.compileFile('./page.jade', options);
 
