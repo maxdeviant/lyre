@@ -41,7 +41,7 @@ router.route('/').get(function (req, res) {
 });
 
 router.route('/render').get(function (req, res) {
-    planet.render('page.jade', {}, function (err, body) {
+    planet.render('page.jade', function (err, body) {
         if (err) {
             console.log(err);
         }
@@ -53,7 +53,7 @@ router.route('/render').get(function (req, res) {
 router.route('/update').post(function (req, res) {
     var source = req.body.source;
 
-    planet.render('page.jade', {}, function (err, body) {
+    planet.render('page.jade', function (err, body) {
         if (err) {
             console.log(err);
         }
