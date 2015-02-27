@@ -1,15 +1,18 @@
 doctype html
-head
-    title #{title}
-body
-    div.container
-        h1.title #{header}
-        p #{content}
-        h2 Goodbye
+html
+    head
+        title #{title}
 
-        h3 Farewell
-        != partial('_partial')
-style.
-    .title {
-        color: red;
-    }
+        link(rel='stylesheet', href='css/style.css')
+    body
+        style.
+            .title {
+                color: red;
+            }
+        div.container
+            h1.title #{header}
+            p #{content}
+            h2 Goodbye
+
+            h3 Farewell
+            != partial('_partial')
