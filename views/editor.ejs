@@ -13,13 +13,29 @@
             padding: 0;
         }
 
-        .source,
-        .output {
+        .view.split .source,
+        .view.split .preview {
             width: 50%;
             float: left;
         }
 
-        .output iframe {
+        .view.source-only .source {
+            width: 100%;
+        }
+
+        .view.source-only .preview {
+            display: none;
+        }
+
+        .view.preview-only .preview {
+            width: 100%;
+        }
+
+        .view.preview-only .source {
+            display: none;
+        }
+
+        .preview iframe {
             position: absolute;
             top: 0;
             width: 50%;
@@ -39,19 +55,34 @@
             bottom: 0;
             z-index: 999;
         }
+
+        .view-controls {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            z-index: 999;
+        }
     </style>
     <form method="post" action="/update">
-        <div class="source">
-            <div id="editor"><%= source %></div>
-        </div>
-        <div class="output">
-            <iframe src="/render" frameborder="0"></iframe>
+        <div class="view split">
+            <div class="source">
+                <div id="editor"><%= source %></div>
+            </div>
+            <div class="preview">
+                <iframe src="/render" frameborder="0"></iframe>
+            </div>
         </div>
         <textarea id="source" name="source" style="display: none;"><%= source %></textarea>
         <input class="save" type="submit" value="Save">
     </form>
+    <div class="view-controls">
+        <button id="source-only">Source</button>
+        <button id="split">Split</button>
+        <button id="preview-only">Preview</button>
+    </div>
     <script>
         var editor = ace.edit('editor');
+
         editor.setTheme('ace/theme/monokai');
         editor.getSession().setMode('ace/mode/jade');
 
@@ -59,6 +90,24 @@
 
         editor.getSession().on('change', function () {
             source.val(editor.getSession().getValue());
+        });
+
+        $('#source-only').on('click', function (e) {
+            $('.view')
+                .removeClass('split preview-only')
+                .addClass('source-only');
+        });
+
+        $('#split').on('click', function (e) {
+            $('.view')
+                .removeClass('source-only preview-only')
+                .addClass('split');
+        });
+
+        $('#preview-only').on('click', function(e) {
+            $('.view')
+                .removeClass('source-only split')
+                .addClass('preview-only');
         });
     </script>
 </body>
